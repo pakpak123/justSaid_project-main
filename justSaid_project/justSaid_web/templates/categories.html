@@ -1,0 +1,19 @@
+<!-- หน้า home -->
+
+{% extends 'base.html' %} {% block title %}{{ post.title }}{% endblock %} {% block content %} {% if category_posts %}
+<h1>{{ cats }}
+    <!--ชื่อหัวข้อใส่ไม่ใส่ก็ได้Category-->
+</h1>
+<ul>
+    {% for post in category_posts %}
+    <li> <a><a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a> - {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.post_date }} {% if user.is_authenticated %}
+        <small>
+            <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+
+            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+        </small><br/> {{ post.body|slice:":200" }}</li>
+    {% endif %} {% end for %}
+</ul>
+category_posts {% endblock %} {% else %}
+<h2> Sorry this page does not exist... </h2>
+{% end if %}
